@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8">
+		<title>Painel</title>
+		<style>
+			body { font-family: sans-serif; padding: 32px; }
+            .painel { padding: 16px; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            .titulo { font-size: 1.125rem; font-weight: bold; color: #374151; margin-bottom: 8px; }
+        
+            /* Classes para controlar o visual dos estados */
+            .carregando { color: #6b7280; }
+            .erro { color: #ef4444; }
+            .sucesso { color: #16a34a; font-weight: 500; }
+            .expressao {color: blue}
+            .input-button {}
+		</style>
+	</head>
+	<body>
+		
+		<h1>Painel</h1>
+
+		<div class="painel">
+			<h2 class="titulo">Insira uma expressão lógica:</h2>
+			
+			<input type='text' id='expressao' class='input-button'>
+			<button type='submit' id='enviar'>Enviar</button>
+
+			<p id="mensagem-status" class="carregando">Conectando ao Haskell...</p>
+		</div>
+
+		<script>
+
+			document.getElementById('enviar').addEventListener('click', () => {
+				
+				const valor = document.getElementById('expressao').value;
+
+				const pacote = {
+					expressao: valor 
+				};
+
+				console.log("Iniciando fetch")
+
+				fetch('http://localhost:3000/api/data', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(pacote)
+				})
+				.then(resposta => resposta.json())
+				.then(dadosServidor => {
+        			alert("O Haskell respondeu: " + dadosServidor.status);
+    			})
+				.catch(erro => console.error("Erro: ", erro));
+
+				/* Testando o retorno de dados------------------------------
+
+				const elementoStatus = document.getElementById('mensagem-status');
+
+				fetch('http://localhost:3000/api/data', {method: 'GET'})
+				.then((resposta) => {
+					if(!resposta.ok){
+						throw new Error('Falha ao receber dados');
+					}
+				})
+				.then((dados) => {
+					elementoStatus.textContent = dados.message
+					elementoStatus.className = 'expressao'
+				})
+				.catch((err) => {
+					elementoStatus.textContent = 'Erro: ' + err.message
+					elementoStatus.className = 'erro'
+				})
+
+				-----------------------------------------------------------*/
+			});
+
+			document.addEventListener('DOMContentLoaded', () => {
+
+				const elementoStatus = document.getElementById('mensagem-status');
+
+				fetch('http://localhost:3000/api/health', {method: 'GET'})
+					.then((resposta) => {
+						if(!resposta.ok){
+							throw new Error('Falha ao tentar conectar ao servidor');
+						}
+					})
+					.then(() => {
+						elementoStatus.textContent = 'Aguardando input...'
+					})
+					.catch((err) => {
+						elementoStatus.textContent = 'Erro: ' + err.message
+						elementoStatus.className = 'erro' 
+					})
+					
+			});
+		</script>
+
+	</body>
+</html>
