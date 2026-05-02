@@ -1,2 +1,20 @@
 .stack-work/
+
+# Extensões de arquivos de compilação intermediários
+*.o
+*.hi
+*.hie
+*.chi
+*.chs.h
+
+# Arquivos do Cabal, caso seja utilizado
+dist/
+dist-*
+cabal-dev
+
+# Arquivos do editor e SO, por via das dúvidas
+.vscode/
+.idea/
+*.swp
 *~
+.DS_Store

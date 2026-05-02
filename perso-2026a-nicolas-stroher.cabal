@@ -1,6 +1,6 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.39.1.
+-- This file has been generated from package.yaml by hpack version 0.38.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -25,7 +25,8 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Logica
+      Parser
   other-modules:
       Paths_perso_2026a_nicolas_stroher
   autogen-modules:
@@ -34,10 +35,12 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      aeson
+      HUnit
+    , aeson
     , base >=4.7 && <5
     , generic-deriving
     , http-types
+    , megaparsec
     , random
     , scotty
     , sqlite-simple
@@ -58,10 +61,12 @@ executable perso-2026a-nicolas-stroher-exe
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      HUnit
+    , aeson
     , base >=4.7 && <5
     , generic-deriving
     , http-types
+    , megaparsec
     , perso-2026a-nicolas-stroher
     , random
     , scotty
@@ -84,10 +89,12 @@ test-suite perso-2026a-nicolas-stroher-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      HUnit
+    , aeson
     , base >=4.7 && <5
     , generic-deriving
     , http-types
+    , megaparsec
     , perso-2026a-nicolas-stroher
     , random
     , scotty

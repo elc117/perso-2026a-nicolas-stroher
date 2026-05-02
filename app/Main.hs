@@ -12,6 +12,7 @@ import GHC.Generics (Generic)
 data DadosRecebidos = DadosRecebidos
     {expressao :: String}
     deriving (Show, Generic)
+    
 instance FromJSON DadosRecebidos
 
 politicaCors :: Middleware
@@ -35,3 +36,5 @@ main = scotty 3000 $ do
         dados <- jsonData :: ActionM DadosRecebidos
         liftIO $ putStrLn $ ">>> Chegou do JS: " ++ expressao dados
         json $ object["status" .= (expressao dados :: String)]
+
+    -- get "/api/data" $ do

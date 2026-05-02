@@ -32,6 +32,8 @@ dependencies:
 - wai-cors
 - generic-deriving
 - wai
+- HUnit
+- megaparsec
 
 ghc-options:
 - -Wall
