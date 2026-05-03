@@ -41,6 +41,7 @@ library
     , generic-deriving
     , http-types
     , megaparsec
+    , parser-combinators
     , random
     , scotty
     , sqlite-simple
@@ -67,6 +68,7 @@ executable perso-2026a-nicolas-stroher-exe
     , generic-deriving
     , http-types
     , megaparsec
+    , parser-combinators
     , perso-2026a-nicolas-stroher
     , random
     , scotty
@@ -95,6 +97,7 @@ test-suite perso-2026a-nicolas-stroher-test
     , generic-deriving
     , http-types
     , megaparsec
+    , parser-combinators
     , perso-2026a-nicolas-stroher
     , random
     , scotty

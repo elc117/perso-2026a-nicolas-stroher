@@ -3,13 +3,15 @@ module Logica where
 data Expressao
     = Valor Bool
     | Variavel String
-    | Nao Expressao
-    | E Expressao Expressao
-    | Ou Expressao Expressao
+    | Not Expressao
+    | And Expressao Expressao
+    | Or Expressao Expressao
     deriving(Show, Eq)
 
+-- Lista de variaveis disponiveis - comunicacao com o parser a ser implementada
 type Ambiente = [(String, Bool)]
 
+-- Env local, retorno deve ser armazenado. Provavelmente vai ser melhorado
 atualizaAmbiente :: Ambiente -> Ambiente -> Ambiente
 atualizaAmbiente novo env = novo ++ env
 
@@ -22,8 +24,8 @@ avaliar env expressao =
             Just valor -> valor
             Nothing -> error "Variável não encontrada no ambiente"
         
-        Nao exp-> not (avaliar env exp)
+        Not exp -> not (avaliar env exp)
         
-        E esq dir -> avaliar env esq && avaliar env dir
+        And esq dir -> avaliar env esq && avaliar env dir
 
-        Ou esq dir -> avaliar env esq || avaliar env dir
+        Or esq dir -> avaliar env esq || avaliar env dir

@@ -11,9 +11,10 @@ import GHC.Generics (Generic)
 
 data DadosRecebidos = DadosRecebidos
     {expressao :: String}
-    deriving (Show, Generic)
-    
+    deriving (Show, Generic)    
+
 instance FromJSON DadosRecebidos
+
 
 politicaCors :: Middleware
 politicaCors = cors (const $ Just policy)
