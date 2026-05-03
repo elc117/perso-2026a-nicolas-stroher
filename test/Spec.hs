@@ -40,10 +40,23 @@ testParser = TestCase $ do
     assertParse "parseExpressao - operador OR" 
                 (Or (Variable "A") (Variable "B")) "A || B"
 
-    assertParse ""
+    assertParse "parseExpressao - operador XOR"
+                (Xor (Variable "A") (Variable "B")) "A XOR B"
 
-    assertParse "parseExpressao - hierarquia (! > && > ||)" 
+    assertParse "parseExpressao - operador ImpliesRight"
+                (ImpliesRight (Variable "A") (Variable "B")) "A -> B"
+
+    assertParse "parseExpressao - operador ImpliesLeft"
+                (ImpliesLeft (Variable "A" (Variable "B"))) "A <- B"
+
+    assertParse "parseExpressao - hierarquia (! > && > XOR > || > '->' > '<-')" 
                 (Or (Not (Variable "A"))(And (Variable "B") (Variable "C")))"!A || B && C"
+
+    assertParse "parseExpressao - hierarquia (! > && > XOR > || > '->' > '<-')"
+                (ImpliesRight (Or (Variable "A") (Xor (Variable "B") (Variable "C"))) (Variable "A")) "A || B XOR C -> A"
+
+    assertParse "parseExpressao - hierarquia (! > && > XOR > || > '->' > '<-')"
+                (ImpliesRight (Variable "A") (Or (Xor (Variable "B") (Variavle "C")) (Variable "A")) (Variable "A")) "A <- B XOR C || A"
 
 testParseBool :: Test
 testParseBool = TestCase $ do

@@ -34,7 +34,7 @@ politicaCors = cors (const $ Just policy)
 
 
 main :: IO ()
-main = scotty 8080 $ do
+main = scotty 3000 $ do
     middleware logStdoutDev
     middleware politicaCors
 

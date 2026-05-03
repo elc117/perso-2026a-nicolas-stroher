@@ -1,0 +1,25 @@
+{
+  "name": "Haskell + Vite Monorepo",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "haskell.manageHLS": "GHCup"
+      },
+      "extensions": [
+        "haskell.haskell",
+        "justusadam.language-haskell",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "forwardPorts": [3000, 5173],
+  "portsAttributes": {
+    "3000": { "label": "Backend Haskell", "onAutoForward": "notify" },
+    "5173": { "label": "Frontend Vite", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "stack build --dependencies-only && cd frontend && npm install"
+}
