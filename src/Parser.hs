@@ -6,7 +6,7 @@ import Text.Megaparsec.Char
 import Control.Monad.Combinators.Expr
 import Text.Megaparsec.Char.Lexer as L
 import Data.Void
-import Logica
+import Logic
 
 type Parser = Parsec Void String
 
@@ -24,32 +24,32 @@ parserLexeme p = p <* ws
 
 -- Construtores na tabela sao tratados em makeExprParser, que cria os parsers
 -- Possivel futura implementacao de XOR
-tabelaOperacoes :: [[Operator Parser Expressao]]
-tabelaOperacoes = 
-    [ [Prefix (Not <$ parserLexeme (char '!'))]
+operatorTable :: [[Operator Parser Expression]]
+operatorTable = 
+    [ [Prefix (Not <$ parserLexeme (string "!"))]
     , [InfixL (And <$ parserLexeme (string "&&"))]
     , [InfixL (Or <$ parserLexeme (string "||"))]
     ]
 
--- makeExprParser trata os operadores em tabelaOperacoes. Caso nenhum seja o procurado, passa para parseTermo
-parseExpressao :: Parser Expressao
-parseExpressao = makeExprParser parseTermo tabelaOperacoes
+-- makeExprParser trata os operadores em operatorTable. Caso nenhum seja o procurado, passa para parseTerm
+parseExpression :: Parser Expression
+parseExpression = makeExprParser parseTerm operatorTable
 
-parseVariavel :: Parser Expressao
-parseVariavel = Variavel <$> parserLexeme (some letterChar)
+parseVariable :: Parser Expression
+parseVariable = Variable <$> parserLexeme (some letterChar)
 
-parseTermo :: Parser Expressao
-parseTermo = parseBool <|> parseVariavel <|> parseEntreParenteses
+parseTerm :: Parser Expression
+parseTerm = parseBool <|> parseVariable <|> parseParantheses
     where
-        parseEntreParenteses = char '(' *> parseExpressao <* char ')'
+        parseParantheses= string "(" *> parseExpression <* string ")"
 
 
 
-parseBool :: Parser Expressao
+parseBool :: Parser Expression
 parseBool = parseTrue <|> parseFalse
 
-parseTrue :: Parser Expressao
-parseTrue = Valor True <$ parserLexeme (string' "true") 
+parseTrue :: Parser Expression
+parseTrue = Value True <$ parserLexeme (string' "true") 
 
-parseFalse :: Parser Expressao
-parseFalse = Valor False <$ parserLexeme (string' "false")
+parseFalse :: Parser Expression
+parseFalse = Value False <$ parserLexeme (string' "false")

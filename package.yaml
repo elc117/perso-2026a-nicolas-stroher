@@ -35,6 +35,7 @@ dependencies:
 - HUnit
 - megaparsec
 - parser-combinators
+- containers
 
 ghc-options:
 - -Wall

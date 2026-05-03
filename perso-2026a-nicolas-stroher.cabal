@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      Logica
+      Logic
       Parser
   other-modules:
       Paths_perso_2026a_nicolas_stroher
@@ -38,6 +38,7 @@ library
       HUnit
     , aeson
     , base >=4.7 && <5
+    , containers
     , generic-deriving
     , http-types
     , megaparsec
@@ -65,6 +66,7 @@ executable perso-2026a-nicolas-stroher-exe
       HUnit
     , aeson
     , base >=4.7 && <5
+    , containers
     , generic-deriving
     , http-types
     , megaparsec
@@ -94,6 +96,7 @@ test-suite perso-2026a-nicolas-stroher-test
       HUnit
     , aeson
     , base >=4.7 && <5
+    , containers
     , generic-deriving
     , http-types
     , megaparsec

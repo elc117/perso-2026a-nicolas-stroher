@@ -100,36 +100,42 @@ export function LogicEvaluator() {
     setVariables((prev) => prev.filter((v) => v.name !== name))
   }, [])
 
-  // Placeholder para integracao com backend Haskell
-  // Esta funcao deve ser substituida pela chamada real ao backend
-  const evaluate = useCallback(() => {
+  // Envia a expressao para o haskell e recebe uma resposta
+  // Envia a expressao para o haskell e recebe uma resposta
+  // Envia um objeto de formato:
+  // { expression: "!A && B", variables: { "A": true, "B": false } }
+  // e espera receber um objeto de formato:
+  // { result: false }
+  const evaluate = useCallback(async () => {
     if (!expression.trim()) return
 
-    // TODO: Substituir por chamada ao backend Haskell
-    // Exemplo de como seria a integracao:
-    // const response = await fetch('/api/evaluate', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ expression, variables })
-    // })
-    // const { result } = await response.json()
+    // Converte array [{name, value}] para objeto {name: value} esperado pelo Haskell
+    const variablesObj = variables.reduce((acc, { name, value }) => {
+      acc[name] = value
+      return acc
+    }, {})
 
-    // Simulacao temporaria - o resultado vira do backend
-    const simulatedResult = Math.random() > 0.5
+    const response = await fetch('/api/evaluate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({ expression, variables: variablesObj })
+    })
+    const { result } = await response.json()
 
     const newResult = {
       expression: expression.trim(),
-      result: simulatedResult,
+      result,
       timestamp: new Date(),
     }
 
     setCurrentResult({
       expression: expression.trim(),
-      result: simulatedResult,
+      result,
     })
 
     setResults((prev) => [newResult, ...prev.slice(0, 19)])
-  }, [expression])
+
+  }, [expression, variables])
 
   const clearAll = useCallback(() => {
     setVariables([])
