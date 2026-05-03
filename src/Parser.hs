@@ -28,7 +28,10 @@ operatorTable :: [[Operator Parser Expression]]
 operatorTable = 
     [ [Prefix (Not <$ parserLexeme (string "!"))]
     , [InfixL (And <$ parserLexeme (string "&&"))]
-    , [InfixL (Or <$ parserLexeme (string "||"))]
+    , [InfixL (Xor <$ parserLexeme (string "XOR"))]
+    , [InfixL (Or <$ parserLexeme (string "||"))] 
+    , [InfixL (ImpliesRight <$ parserLexeme (string "->"))]
+    , [InfixL (ImpliesLeft <$ parserLexeme (string "<-"))]
     ]
 
 -- makeExprParser trata os operadores em operatorTable. Caso nenhum seja o procurado, passa para parseTerm

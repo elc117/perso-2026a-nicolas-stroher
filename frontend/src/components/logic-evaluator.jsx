@@ -160,26 +160,20 @@ export function LogicEvaluator() {
     { label: "A || B", expr: "A || B" },
     { label: "NOT A", expr: "NOT A" },
     { label: "!A", expr: "!A" },
-    { label: "A IMPLIES B", expr: "A IMPLIES B" },
-    { label: "A :- B", expr: "A :- B" },
+    { label: "A -> B", expr: "A -> B" },
+    { label: "A <- B", expr: "A <- B" },
   ]
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="mx-auto max-w-6xl">
+    <div className="flex min-h-dvh justify-center px-4 py-6 md:items-center md:px-8 md:py-8">
+      <div className="mx-auto w-full max-w-6xl">
         {/* Header */}
         <header className="mb-8 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border-2 border-secondary bg-card px-4 py-2">
-            <Sparkles className="h-5 w-5 text-primary" />
-            <span className="text-sm font-semibold uppercase tracking-wider text-secondary">
-              Avaliador Logico
-            </span>
-          </div>
           <h1 className="mb-2 text-balance text-3xl font-bold tracking-tight text-secondary md:text-4xl">
-            Avaliador de Expressoes Logicas
+            Avaliador de Expressões Lógicas
           </h1>
           <p className="text-pretty text-muted-foreground">
-            Insira variaveis, defina valores e avalie expressoes logicas em
+            Insira variáveis, defina valores e avalie expressões lógicas em
             tempo real
           </p>
         </header>
@@ -190,7 +184,7 @@ export function LogicEvaluator() {
             <CardHeader className="border-b-2 border-secondary bg-secondary/5 pb-4">
               <CardTitle className="flex items-center gap-2 text-secondary">
                 <BookOpen className="h-5 w-5" />
-                Variaveis
+                Variáveis
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4">
@@ -221,10 +215,10 @@ export function LogicEvaluator() {
               {variables.length === 0 ? (
                 <div className="rounded-lg border-2 border-dashed border-muted-foreground/30 p-6 text-center">
                   <p className="text-sm text-muted-foreground">
-                    Nenhuma variavel definida
+                    Nenhuma variável definida
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Adicione variaveis como A = True, B = False...
+                    Adicione variáveis como A = True, B = False...
                   </p>
                 </div>
               ) : (
@@ -270,7 +264,7 @@ export function LogicEvaluator() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-secondary">
                   <Lightbulb className="h-5 w-5" />
-                  Expressao Logica
+                  Expressão Lógica
                 </CardTitle>
                 <Dialog open={isHistoryOpen} onOpenChange={setIsHistoryOpen}>
                   <DialogTrigger asChild>
@@ -280,7 +274,7 @@ export function LogicEvaluator() {
                       className="border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
                     >
                       <History className="mr-2 h-4 w-4" />
-                      Historico
+                      Histórico
                       {results.length > 0 && (
                         <Badge
                           variant="secondary"
@@ -296,7 +290,7 @@ export function LogicEvaluator() {
                       <div className="flex items-center justify-between">
                         <DialogTitle className="flex items-center gap-2 text-secondary">
                           <History className="h-5 w-5" />
-                          Historico de Avaliacoes
+                          Histórico de Avaliações
                         </DialogTitle>
                         {results.length > 0 && (
                           <Button
@@ -316,10 +310,10 @@ export function LogicEvaluator() {
                         <div className="rounded-lg border-2 border-dashed border-muted-foreground/30 p-8 text-center">
                           <History className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
                           <p className="text-sm text-muted-foreground">
-                            Nenhuma avaliacao realizada ainda
+                            Nenhuma avaliação realizada ainda
                           </p>
                           <p className="mt-1 text-xs text-muted-foreground">
-                            As avaliacoes aparecerao aqui
+                            As avaliações aparecerão aqui
                           </p>
                         </div>
                       ) : (
@@ -371,7 +365,7 @@ export function LogicEvaluator() {
               {/* Examples */}
               <div className="mb-4">
                 <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Exemplos rapidos:
+                  Exemplos rápidos:
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {examples.map((ex) => (
@@ -399,7 +393,7 @@ export function LogicEvaluator() {
                     evaluate()
                   }
                 }}
-                placeholder={"Digite sua expressao logica...\nEx: (A AND B) OR (NOT C)\nOperadores: AND/&&, OR/||, NOT/!, IMPLIES/:-"}
+                placeholder={"Digite sua expressão lógica...\nEx: (A AND B) OR (NOT C)\nOperadores: AND/&&, OR/||, NOT/!, IMPLIES/-> ou <-"}
                 className="mb-4 min-h-[120px] resize-none border-2 border-secondary bg-input font-mono text-secondary placeholder:text-muted-foreground focus:ring-2 focus:ring-primary"
               />
 
@@ -466,7 +460,7 @@ export function LogicEvaluator() {
                     NOT / !
                   </Badge>
                   <Badge variant="outline" className="font-mono">
-                    IMPLIES / :-
+                    IMPLIES / {"->"}, {"<-"}
                   </Badge>
                 </div>
               </div>

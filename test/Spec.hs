@@ -40,6 +40,8 @@ testParser = TestCase $ do
     assertParse "parseExpressao - operador OR" 
                 (Or (Variable "A") (Variable "B")) "A || B"
 
+    assertParse ""
+
     assertParse "parseExpressao - hierarquia (! > && > ||)" 
                 (Or (Not (Variable "A"))(And (Variable "B") (Variable "C")))"!A || B && C"
 
