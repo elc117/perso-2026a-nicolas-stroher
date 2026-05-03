@@ -13,8 +13,29 @@ dist-*
 cabal-dev
 
 # Arquivos do editor e SO, por via das dúvidas
+*~
 .vscode/
+!.vscode/extensions.json
 .idea/
 *.swp
-*~
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node
+node_modules
+dist
+dist-ssr
+*.local
