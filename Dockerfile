@@ -9,7 +9,7 @@ COPY stack.yaml package.yaml ./
 COPY . .
 
 # Compila o projeto
-RUN stack build --system-ghc --allow-different-user
+RUN stack build --install-ghc --allow-different-user
 
 # O comando que mantém o servidor de pé na nuvem
 CMD ["stack", "run", "--allow-different-user"]
