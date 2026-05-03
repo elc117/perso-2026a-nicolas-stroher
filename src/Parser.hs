@@ -18,7 +18,13 @@ ws = L.space space1 empty empty
 
 -- Funciona como um wrapper para parsers, eliminando os espacos em branco
 parserLexeme :: Parser a -> Parser a
-parserLexeme p = p <* ws
+parserLexeme = L.lexeme ws
+
+operatorSymbol :: String -> Parser String
+operatorSymbol = L.symbol ws
+
+keyword :: String -> Parser String
+keyword word = try (string' word <* notFollowedBy alphaNumChar) <* ws
 
 
 
@@ -26,17 +32,17 @@ parserLexeme p = p <* ws
 -- Possivel futura implementacao de XOR
 operatorTable :: [[Operator Parser Expression]]
 operatorTable = 
-    [ [Prefix (Not <$ parserLexeme (string "!"))]
-    , [InfixL (And <$ parserLexeme (string "&&"))]
-    , [InfixL (Xor <$ parserLexeme (string "XOR"))]
-    , [InfixL (Or <$ parserLexeme (string "||"))] 
-    , [InfixL (ImpliesRight <$ parserLexeme (string "->"))]
-    , [InfixL (ImpliesLeft <$ parserLexeme (string "<-"))]
+    [ [Prefix (Not <$ operatorSymbol "!"), Prefix (Not <$ keyword "NOT")]
+    , [InfixL (And <$ operatorSymbol "&&"), InfixL (And <$ keyword "AND")]
+    , [InfixL (Xor <$ keyword "XOR")]
+    , [InfixL (Or <$ operatorSymbol "||"), InfixL (Or <$ keyword "OR")]
+    , [InfixL (ImpliesRight <$ operatorSymbol "->")]
+    , [InfixL (ImpliesLeft <$ operatorSymbol "<-")]
     ]
 
 -- makeExprParser trata os operadores em operatorTable. Caso nenhum seja o procurado, passa para parseTerm
 parseExpression :: Parser Expression
-parseExpression = makeExprParser parseTerm operatorTable
+parseExpression = ws *> makeExprParser parseTerm operatorTable <* eof
 
 parseVariable :: Parser Expression
 parseVariable = Variable <$> parserLexeme (some letterChar)
@@ -44,7 +50,7 @@ parseVariable = Variable <$> parserLexeme (some letterChar)
 parseTerm :: Parser Expression
 parseTerm = parseBool <|> parseVariable <|> parseParantheses
     where
-        parseParantheses= string "(" *> parseExpression <* string ")"
+        parseParantheses = operatorSymbol "(" *> parseExpression <* operatorSymbol ")"
 
 
 
