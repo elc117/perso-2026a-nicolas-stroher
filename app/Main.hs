@@ -6,7 +6,7 @@ import qualified Data.Map as Map
 import Text.Megaparsec
 import Web.Scotty
 import Network.Wai.Middleware.RequestLogger (logStdoutDev)
-import Network.Wai.Middleware.Cors (cors, simpleCorsResourcePolicy, corsMethods, corsRequestHeaders)
+import Network.Wai.Middleware.Cors (cors, simpleCorsResourcePolicy, corsMethods, corsRequestHeaders, corsOrigins)
 import Network.Wai (Middleware)
 import Network.HTTP.Types.Status
 import Data.Aeson (object, (.=), FromJSON, Value(String))
