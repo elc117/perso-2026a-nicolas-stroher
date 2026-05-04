@@ -28,7 +28,7 @@ politicaCors :: Middleware
 politicaCors = cors (const $ Just policy)
     where
         policy = simpleCorsResourcePolicy {
-            corsOrigins = Just (["https://logic-app-5rb3.onrender.com"], True)
+            corsOrigins = Just (["https://logic-app-5rb3.onrender.com"], True),
             corsMethods = ["GET", "POST", "OPTIONS"],
             corsRequestHeaders = ["Content-Type"]
         }
