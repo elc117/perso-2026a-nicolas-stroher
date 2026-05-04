@@ -108,7 +108,8 @@ let Right ast = parse parserExpression "" expr
 
 -- ast = (And (Not (Variable "A")) (Variable "B"))
 ```
-Agora temos uma expressão no formato aceito pelo nosso tipo de dado Expression. Assim, podemos utilizá-lo em evaluate para obter nosso resultado booleano.
+Agora temos uma expressão no formato aceito pelo nosso tipo de dado Expression. Assim, podemos utilizá-lo em evaluate para obter nosso resultado booleano. 
+Para finalizar, o frontend foi feito inteiramente com o Vercel AI e integrado manualmente ao projeto em um diretório frontend/. Além de alguns ajustes, a única parte do frontend em que foi preciso mais atenção foi na implementação de uma função fetch() para comunicação com o backend.
 
 ## 4. Testes
 Para teste, utilizou-se a biblioteca HUnit para criar uma suíte de testes unitários. A suíte é formada essencialmente por testes de parser e de evaluate.
@@ -155,3 +156,6 @@ Assim, o aplicativo na web é formado por duas partes essenciais, mas que não e
 ## 8. Uso de IA
 
 ## 9. Referências e Créditos
+- Documentação do Megaparsec - https://hackage.haskell.org/package/megaparsec
+- Blog Monday Morning Haskell - https://mmhaskell.com/
+- Canal do Youtube "Purely Haskell" - https://www.youtube.com/watch?v=-VFBFutfT-s&t=1231s
