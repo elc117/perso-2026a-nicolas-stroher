@@ -111,3 +111,10 @@ let Right ast = parse parserExpression "" expr
 Agora temos uma expressão no formato aceito pelo nosso tipo de dado Expression. Assim, podemos utilizá-lo em evaluate para obter nosso resultado booleano.
 
 ## 4. Testes
+
+## 5. Execução
+
+## 6. Deploy
+O app está disponível em: https://logic-app-5rb3.onrender.com
+
+## 7. 
