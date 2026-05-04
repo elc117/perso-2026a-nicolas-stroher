@@ -154,6 +154,18 @@ Assim, o aplicativo na web é formado por duas partes essenciais, mas que não e
 ## 7. Resultado Final
 
 ## 8. Uso de IA
+### 8.1. IAs utilizadas
+Ao longo do desenvolvimento, foi utilizado o apoio do Gemini 3 Pro e do GPT. O Gemini foi a principal IA utilizada, servindo principalmente como ferramenta de consulta de bibliotecas, para resolver dúvidas de sintaxe e para identificar problemas no geral. O GPT foi utilizado integrado no VS Code; por ter uma visão ampla do projeto a todo momento, foi a melhor opção em casos de problemas não identificados amplos, em que o problema pode estar em vários arquivos.
+
+### 8.2. Interações relevantes
+
+#### Dúvida de sintaxe/biblioteca
+- Objetivo: esclarecer dúvidas quanto a sintaxe e utilização da biblioteca Aeson
+```
+No código haskell, a que 'object' e '.=' se referem? como eles são classificados e como
+funcionam de acordo com a documentação do Aeson?
+```
+- O que foi aproveitado: 
 
 ## 9. Referências e Créditos
 - Documentação do Megaparsec - https://hackage.haskell.org/package/megaparsec
