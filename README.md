@@ -111,10 +111,47 @@ let Right ast = parse parserExpression "" expr
 Agora temos uma expressão no formato aceito pelo nosso tipo de dado Expression. Assim, podemos utilizá-lo em evaluate para obter nosso resultado booleano.
 
 ## 4. Testes
+Para teste, utilizou-se a biblioteca HUnit para criar uma suíte de testes unitários. A suíte é formada essencialmente por testes de parser e de evaluate.
+Como a lógica de interpretação é bem concisa, o teste dessas três funções (parseExpression, parseBool e evaluate) já é suficiente para garantir a lógica principal do programa.
+```
+testSuite  ::  Test
+testSuite =  TestList
+	[TestLabel  "Teste de avaliacao de expressoes" testEvaluate
+	,TestLabel  "Teste de parseBool" testParseBool
+	,TestLabel  "Teste de parseExpressao" testParser
+]
+```
 
 ## 5. Execução
+A execução do projeto requer duas partes: a execução do backend e a execução do frontend.
+Para executar o backend, é necessário possuir o GHCup, o GHC e o Stack instalado. Na raiz do projeto, execute simplesmente:
+```
+stack setup
+stack run
+```
+Isso coloca o backend em funcionamento, pronto para receber dados do frontend.
+Já quanto ao frontend, é necessário possuir o Node.js e o npm instalado. Na pasta frontend/, execute:
+```
+npm run dev
+```
+Assim, o frontend está funcionando e pronto para enviar dados para o backend e receber o resultado.
+O repositório contém também um Dockerfile, que pode ser utilizado para resolver as dependências automaticamente em um container. Se você utiliza o VS Code, basta instalar o Docker e a extensão Dev Containers. Ao abrir o projeto como container, o Docker automaticamente instala as dependencias necessarias em um ambiente delimitado.
 
 ## 6. Deploy
+
 O app está disponível em: https://logic-app-5rb3.onrender.com
 
-## 7. 
+O app está hosteado na web através do Render.
+O deploy do app foi feito em duas partes: o deploy de um web service, e o deploy de um aplicativo estático.
+
+Primeiro, foi feito o deploy do backend Haskell como web service. Esse web service é isolado do frontend, e é responsável exclusivamente por receber dados do frontend e processá-los para obter o resultado final. Por ser um web service, ele executa sob demanda de chamadas HTTP provenientes do frontend.
+
+Depois, foi feito o deploy do frontend como um aplicativo estático. Ele é isolado do backend, e é responsável somente pela interface, comunicação com o usuário e por enviar a expressão crua para o backend.
+
+Assim, o aplicativo na web é formado por duas partes essenciais, mas que não estão juntas em um único ambiente. Ao invés disso, elas são lançadas independentemente, e se comunicam através de regras de tráfego, gerenciadas pelo CORS.
+
+## 7. Resultado Final
+
+## 8. Uso de IA
+
+## 9. Referências e Créditos
