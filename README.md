@@ -23,5 +23,4 @@ OR/||,
 IMPLIESRIGHT/->,
 IMPLIESLEFT/<-
 ```
-
 O parser trata o tipo Expression, que pode conter um construtor referente a um dos operadores disponíveis.
