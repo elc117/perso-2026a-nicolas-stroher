@@ -1,62 +1,65 @@
 import Text.Megaparsec
 import Test.HUnit
-import Logica
+import Logic
 import Parser
 
 
 testEvaluate :: Test
 testEvaluate = TestCase $ do
     assertEqual "Em caso de Bool, deve retornar o proprio valor" 
-                True (evaluate [] (Valor True))
+                True (evaluate (Value True) [])
 
     assertEqual "Em caso de variavel, deve retornar o valor da variavel no ambiente" 
-                True (evaluate [("A", True)] (Variavel "A"))
+                True (evaluate (Variable "A") [("A", True)])
 
     assertEqual "Em caso de operador 'NOT', deve retornar (not expressao)" 
-                False (evaluate [] (Not (Valor True)))
+                False (evaluate (Not (Value True)) [])
 
     assertEqual "Em caso de operador 'AND', deve retornar (esq && dir)" 
-                False (evaluate [] (And (Valor True) (Valor False)))
+                False (evaluate (And (Value True) (Value False)) [])
 
     assertEqual "Em caso de operador 'OR', deve retornar (esq || dir)" 
-                True (evaluate [] (Or (Valor True) (Valor False)))
+                True (evaluate (Or (Value True) (Value False)) [])
 
 
 
-assertParse :: String -> Expressao -> String -> Assertion
-assertParse message expected input = assertEqual message (Right expected) (parse parseExpressao "source" input)
+assertParse :: String -> Expression -> String -> Assertion
+assertParse message expected input = assertEqual message (Right expected) (parse parseExpressionComplete "source" input)
 
 testParser :: Test
 testParser = TestCase $ do
-    assertParse "parseExpressao - variavel isolada" 
+    assertParse "parseExpression - variavel isolada" 
                 (Variable "A") "A"
 
-    assertParse "parseExpressao - operador NOT" 
+    assertParse "parseExpression - operador NOT" 
                 (Not (Variable "A")) "!A"
 
-    assertParse "parseExpressao - operador AND" 
+    assertParse "parseExpression - operador AND" 
                 (And (Variable "A") (Variable "B")) "A && B"
 
-    assertParse "parseExpressao - operador OR" 
+    assertParse "parseExpression - operador OR" 
                 (Or (Variable "A") (Variable "B")) "A || B"
 
-    assertParse "parseExpressao - operador XOR"
+    assertParse "parseExpression - operador XOR"
                 (Xor (Variable "A") (Variable "B")) "A XOR B"
 
-    assertParse "parseExpressao - operador ImpliesRight"
+    assertParse "parseExpression - operador ImpliesRight"
                 (ImpliesRight (Variable "A") (Variable "B")) "A -> B"
 
-    assertParse "parseExpressao - operador ImpliesLeft"
-                (ImpliesLeft (Variable "A" (Variable "B"))) "A <- B"
+    assertParse "parseExpression - operador ImpliesLeft"
+                (ImpliesLeft (Variable "A") (Variable "B")) "A <- B"
 
-    assertParse "parseExpressao - hierarquia (! > && > XOR > || > '->' > '<-')" 
+    assertParse "parseExpression - hierarquia (! > && > XOR > || > '->' > '<-')" 
                 (Or (Not (Variable "A"))(And (Variable "B") (Variable "C")))"!A || B && C"
 
-    assertParse "parseExpressao - hierarquia (! > && > XOR > || > '->' > '<-')"
+    assertParse "parseExpression - hierarquia (! > && > XOR > || > '->' > '<-')"
                 (ImpliesRight (Or (Variable "A") (Xor (Variable "B") (Variable "C"))) (Variable "A")) "A || B XOR C -> A"
 
-    assertParse "parseExpressao - hierarquia (! > && > XOR > || > '->' > '<-')"
-                (ImpliesRight (Variable "A") (Or (Xor (Variable "B") (Variavle "C")) (Variable "A")) (Variable "A")) "A <- B XOR C || A"
+    assertParse "parseExpression - hierarquia (! > && > XOR > || > '->' > '<-')"
+                (ImpliesLeft (Variable "A") (Or (Xor (Variable "B") (Variable "C")) (Variable "A"))) "A <- B XOR C || A"
+
+    assertParse "parseExpression - parenteses"
+                (And (Not (Or (Variable "A") (Variable "B"))) (Variable "C")) "!(A || B) && C"
 
 testParseBool :: Test
 testParseBool = TestCase $ do

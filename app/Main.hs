@@ -48,7 +48,8 @@ main = scotty 3000 $ do
         let exp = expression dados
             env = Map.toList $ variables dados
 
-        let parsedExp = parse parseExpression "" exp
+        -- chamada parseExpressionComplete ao inves de parseExpression para validacao correta de parenteses e lixo
+        let parsedExp = parse parseExpressionComplete "" exp
 
         case parsedExp of
 

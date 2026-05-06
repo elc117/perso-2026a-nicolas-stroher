@@ -42,15 +42,21 @@ operatorTable =
 
 -- makeExprParser trata os operadores em operatorTable. Caso nenhum seja o procurado, passa para parseTerm
 parseExpression :: Parser Expression
-parseExpression = ws *> makeExprParser parseTerm operatorTable <* eof
+parseExpression = ws *> makeExprParser parseTerm operatorTable
+
+-- validação de parser completo, necessario para evitar fim prematuro 
+-- por eof em chamada de parseExpression por parseParantheses
+parseExpressionComplete :: Parser Expression
+parseExpressionComplete = parseExpression <* eof
 
 parseVariable :: Parser Expression
 parseVariable = Variable <$> parserLexeme (some letterChar)
 
+parseParentheses :: Parser Expression
+parseParentheses = operatorSymbol "(" *> parseExpression <* operatorSymbol ")"
+
 parseTerm :: Parser Expression
-parseTerm = parseBool <|> parseVariable <|> parseParantheses
-    where
-        parseParantheses = operatorSymbol "(" *> parseExpression <* operatorSymbol ")"
+parseTerm = parseBool <|> parseVariable <|> parseParentheses
 
 
 
