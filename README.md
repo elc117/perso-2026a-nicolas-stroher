@@ -151,7 +151,13 @@ Depois, foi feito o deploy do frontend como um aplicativo estático. Ele é isol
 
 Assim, o aplicativo na web é formado por duas partes essenciais, mas que não estão juntas em um único ambiente. Ao invés disso, elas são lançadas independentemente, e se comunicam através de regras de tráfego, gerenciadas pelo CORS.
 
+#### OBSERVAÇÃO IMPORTANTE:
+Como fiz em dois deploys separados para aproximar mais o projeto de um caso de uso real, acontece que o backend acaba entrando em hibernação quando o app não é utilizado por algum tempo, devido ao uso do plano grátis do Render. Assim, é possível que seja necessário acessar o link do backend diretamente para forçar o backend a "acordar", para que o frontend consiga se comunicar com ele e para que o app funcione corretamente. Acreditei que o backend acordaria sozinho com uma chamada do frontend, mesmo que com uma certa demora, mas aparentemente não. No entanto, não tenho certeza, mas sei que acessar o link do backend diretamente funciona e bota ele no ar em 2 a 5 minutos, em média.
+
 ## 7. Resultado Final
+<img width="960" height="540" alt="logica2" src="https://github.com/user-attachments/assets/bf090096-95c3-4538-8994-72d489231a43" />
+
+O app suporta a criação de variáveis e expressões complexas. Suporta também a utilização de parênteses. O histórico e as variáveis, porém, são temporários por sessão: eles ficam guardados no frontend (variáveis são enviadas junto no pacote Json para o backend a cada expressão avaliada), e somem ao recarregar a página.
 
 ## 8. Uso de IA
 ### 8.1. IAs utilizadas
